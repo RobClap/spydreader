@@ -17,26 +17,28 @@
 
 '''
 
-
 import time
 import argparse
 import fileinput
 import sys
 
+#CLI Arguments parser section
 parser = argparse.ArgumentParser(usage='Pipe a textfile into this script and it will spritz-like show it to you.\n\tCtrl + C to close\n\tCtrl + Z to suspend (then fg to resume)',description='Spydreader: a command-line python-based speedreader')
 parser.add_argument('--wpm', help='Sets the number of words shown per minute', default='600')
+#TODO parser.add_argument('--curse', help='Sets the number of words shown per minute', default='600')
 args = parser.parse_args()
 wpm=vars(args)["wpm"]
 
+#Some global constants
 class constants:
     LINESIZE = 40
     VOWELS = ["a","e","i","o","u"]
-
 class bcolors:
     BLUE = '\033[94m'
     RED = '\033[01;31m'
     ENDCOLOR = '\033[0m'
 
+#finds the pivot (the red letter)
 def splitter(word):
     toreturn = dict()
     if len(word) <=1:
@@ -59,6 +61,7 @@ def splitter(word):
             toreturn["pivot"] = word[half]
     return toreturn
 
+#Prints the data centered around the pivot
 def wordprinter(data):
         towrite="\r" + " "*(constants.LINESIZE // 2 - len(data["prefix"])) + data["prefix"] + bcolors.RED + data["pivot"] + bcolors.ENDCOLOR + data["suffix"] + " "*(constants.LINESIZE // 2 - len(data["suffix"]))
         sys.stdout.write(towrite.encode('utf-8'))
@@ -69,8 +72,8 @@ print ""
 print " "*(constants.LINESIZE //2 - 13)+u"-- Welcome to spydreader --"
 print "-"*(constants.LINESIZE)
 print " "*(constants.LINESIZE//2) + "|"   
-#print ""
 
+#Mainloop code
 for line in sys.stdin:
     line = line.decode('utf-8')
     for word in line.split():
@@ -80,7 +83,6 @@ for line in sys.stdin:
 
 
 print ""  
-#print ""  
 print " "*(constants.LINESIZE//2) + "|"   
 print "-"*(constants.LINESIZE)
 print " "*(constants.LINESIZE //2 - 4)+u"-- EOF --"
