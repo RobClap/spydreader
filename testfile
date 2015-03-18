@@ -1,5 +1,7 @@
-prova
-uno 
-due
-tre
-questa è una classica prova per testare cose
+Welcome to the command line utility that allows you to read some 
+very long text in a very efficient way! This text should now be
+running at 450 wpm, that is still a very nice speed for normal 
+reading.
+If you find this too slow or you want to change some parameters
+call spyreader --help.
+Enjoy!
