@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 '''
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -11,6 +12,9 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 '''
 
 
@@ -19,8 +23,8 @@ import argparse
 import fileinput
 import sys
 
-parser = argparse.ArgumentParser(usage='Pipe a textfile in this script and it will spritz-like show it to you',description='Command-line speedreader')
-parser.add_argument('--wpm', help='Words per minute', default='600')
+parser = argparse.ArgumentParser(usage='Pipe a textfile into this script and it will spritz-like show it to you.\n\tCtrl + C to close\n\tCtrl + Z to suspend (then fg to resume)',description='Spydreader: a command-line python-based speedreader')
+parser.add_argument('--wpm', help='Sets the number of words shown per minute', default='600')
 args = parser.parse_args()
 wpm=vars(args)["wpm"]
 
@@ -64,8 +68,8 @@ def wordprinter(data):
 print ""  
 print " "*(constants.LINESIZE //2 - 13)+u"-- Welcome to spydreader --"
 print "-"*(constants.LINESIZE)
-#print " "*(constants.LINESIZE//2) + "|"   
-print ""
+print " "*(constants.LINESIZE//2) + "|"   
+#print ""
 
 for line in sys.stdin:
     line = line.decode('utf-8')
@@ -76,7 +80,8 @@ for line in sys.stdin:
 
 
 print ""  
-print ""  
+#print ""  
+print " "*(constants.LINESIZE//2) + "|"   
 print "-"*(constants.LINESIZE)
 print " "*(constants.LINESIZE //2 - 4)+u"-- EOF --"
 print ""
