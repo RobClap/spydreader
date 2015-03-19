@@ -25,9 +25,18 @@ import sys
 #CLI Arguments parser section
 parser = argparse.ArgumentParser(usage='Pipe a textfile into this script and it will spritz-like show it to you.\n\tCtrl + C to close\n\tCtrl + Z to suspend (then fg to resume)',description='Spydreader: a command-line python-based speedreader')
 parser.add_argument('--wpm', help='Sets the number of words shown per minute', default='600')
-#TODO parser.add_argument('--curse', help='Sets the number of words shown per minute', default='600')
+parser.add_argument('--tui', help='Specify wether to use or not a text mode ui')
+
 args = parser.parse_args()
 wpm=vars(args)["wpm"]
+curse=vars(args)["tui"]
+
+#Curse stuff
+if curse :
+    import curses
+    from curses import wrapper
+else:
+    curses = False
 
 #Some global constants
 class constants:
@@ -65,29 +74,65 @@ def splitter(word):
     return toreturn
 
 #Prints the data centered around the pivot
-def wordprinter(data):
-        towrite="\r" + " "*(constants.LINESIZE // 2 - len(data[0])) + data[0] + bcolors.RED + data[1] + bcolors.ENDCOLOR + data[2] + " "*(constants.LINESIZE // 2 - len(data[2]))
-        #sys.stdout.write(towrite.encode('utf-8'))
-        sys.stdout.write(towrite)
-        sys.stdout.flush() 
+def wordprinter(data, stdscr=""):
+        if not curses:
+            towrite="\r" + " "*(constants.LINESIZE // 2 - len(data[0])) + data[0] + bcolors.RED + data[1] + bcolors.ENDCOLOR + data[2] + " "*(constants.LINESIZE // 2 - len(data[2]))
+            sys.stdout.write(towrite)
+            sys.stdout.flush() 
+        else:
+            stdscr.clear()
+            key = stdscr.getch()
+            stdscr.addstr(0,0,str(key))
+            if key == ord('q'):
+                curses.endwin()
+            if key==ord(' '):
+                time.sleep(10)
+            vertpos=(curses.LINES-1) // 2 
+            orizpos=(curses.COLS-1) // 2 - len(data[0])
+            curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+            stdscr.addstr(vertpos - 2 ,(curses.COLS - constants.LINESIZE) // 2, "-"*constants.LINESIZE,curses.color_pair(0))
+            stdscr.addstr(vertpos - 1 ,(curses.COLS) // 2, "|",curses.color_pair(0))
+            
+            stdscr.addstr(vertpos,orizpos,data[0],curses.color_pair(0))
+            stdscr.addstr(vertpos,orizpos + len(data[0]), data[1],curses.color_pair(1))
+            stdscr.addstr(vertpos, orizpos + len(data[0]) + 1,data[2],curses.color_pair(0))
+            
+            stdscr.addstr(vertpos + 1 ,(curses.COLS) // 2, "|",curses.color_pair(0))
+            stdscr.addstr(vertpos + 2 ,(curses.COLS - constants.LINESIZE) // 2, "-"*constants.LINESIZE,curses.color_pair(0))
+            stdscr.addstr(curses.LINES - 1, 0 ,"Space to pause, q to quit",curses.color_pair(0))
+            stdscr.refresh()
 
 
-print ("")  
-print (" "*(constants.LINESIZE //2 - 13)+u"-- Welcome to spydreader --")
-print ("-"*(constants.LINESIZE))
-print (" "*(constants.LINESIZE//2) + "|"   )
+def main(stdscr = ""):
+    if not curse:
+        print ("")  
+        print (" "*(constants.LINESIZE //2 - 13)+u"-- Welcome to spydreader --")
+        print ("-"*(constants.LINESIZE))
+        print (" "*(constants.LINESIZE//2) + "|"   )
+    else:
+        stdscr.keypad(True)
+        stdscr.clear()
 
-#Mainloop code
-for line in sys.stdin:
+    #Mainloop code
+    for line in sys.stdin:
     #line = line.decode('utf-8')
-    for word in line.split():
-        data=splitter(word)
-        wordprinter(data)
-        time.sleep(60 / float(wpm))
+        for word in line.split():
+            data=splitter(word)
+            wordprinter(data,stdscr)
+            time.sleep(60 / float(wpm))
 
+    if not curse:
+        print ("")  
+        print (" "*(constants.LINESIZE//2) + "|")
+        print ("-"*(constants.LINESIZE))
+        print (" "*(constants.LINESIZE //2 - 4)+u"-- EOF --")
+        print ("")
+    else:
+        stdscr.refresh()
+        stdscr.getkey()
+        curses.endwin()
 
-print ("")  
-print (" "*(constants.LINESIZE//2) + "|")
-print ("-"*(constants.LINESIZE))
-print (" "*(constants.LINESIZE //2 - 4)+u"-- EOF --")
-print ("")
+if curse:
+    wrapper(main)
+else:
+    main()
