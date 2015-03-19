@@ -1,0 +1,54 @@
+Since their introduction, social networking sites (SNSs) such as Friendster, MySpace, Facebook, Orkut, LinkedIn, and
+myriad others have attracted hundreds of millions of users, many of whom have integrated SNSs into their daily lives to
+communicate with friends, send e-mails, solicit opinions or votes, organize events, spread ideas, find jobs, and more .
+Facebook, an SNS launched in February 2004, now overwhelms numerous aspects of everyday life, and it has become an
+immensely popular societal obsession . Facebook members can create self-descriptive profiles that include links to the
+profiles of their ‘‘friends’’, who may or may not be offline friends. Facebook requires that anybody who wants to be added as
+a friend have the relationship confirmed, so Facebook friendships define a network (graph) of reciprocated ties (undirected
+edges) that connect individual users. (In this article, we use the words ‘‘edge’’ and ‘‘link’’ interchangeably.)
+The emergence of SNSs such as Facebook and MySpace has revolutionized the availability of social and demographic data,
+which has in turn had a significant impact on the study of social networks . It is possible to acquire very large data
+sets from SNSs, though of course the population online and actively using SNSs is a biased sample of the broader population.
+Services like Facebook also contain large quantities of demographic data, as many users now voluntarily reveal voluminous
+amounts of detailed personal information. An especially exciting aspect of studying SNSs is that they provide an opportunity
+to examine social organization at unprecedented levels of size and detail, and they also provide new venues to test sampling
+effects . One can investigate the structure of an SNS like Facebook to examine it as a network in its own right, and ideally
+one can also try to take one step further and infer interesting insights regarding the offline social networks that an SNS
+imperfectly parallels. Most people tend to draw their Facebook friends from their real-life social networks , so it is not
+entirely unreasonable to use a Facebook network as a proxy for an offline social network. (Of course, as noted by Hogan ,
+one does need to be aware of significant limitations when taking such a leap of faith.)
+Social scientists, information scientists, and physical scientists have all jumped on the SNS data bandwagon . It would
+be impossible to exhaustively cite all of the research in this area, so we only highlight a few results; additional references
+can be found in the review by Boyd and Ellison  also conducted an empirical study of Facebook and
+MySpace, concluding that Facebook tends to appeal to a more elite and educated cross section than MySpace. The company
+RapLeaf  has compiled global demographics on the age and gender usage of numerous SNSs. Other recent studies have
+investigated the manifestation on SNSs of race and ethnicity .
+Other research has illustrated that online friendship networks can be exploited to improve shopper recommendation
+systems on websites such as Amazon . (Presumably, this is becoming increasingly prominent in practice.)
+Several papers have attempted to increase understanding of how SNS friendships form. For example, Kumar et al. 
+examined preferential attachment models of SNS growth, concluding that it is important to consider different classes
+of users. Lampe et al.  explored the relationship between profile elements and number of Facebook friends, and
+other scholars have examined the importance of geography  to online friendship
+formation. Other papers have established the existence of strong correlations between network participation and website
+activity, including the motivation of people to join particular groups ,
+online messages and friendship formation , and the role of explicit
+ideological relationship designations in affecting voting behavior  used Facebook data for an entire
+class of freshmen at an unnamed, private American university to conduct a quantitative study of social networks and cultural
+preferences. The same data set was also used to examine user privacy settings on Facebook .
+In the present paper, we study the complete Facebook networks of 100 American colleges and universities from a single-
+day snapshot in September 2005. This paper is a sequel to our previous research on 5 of these institutions , in which we
+developed some of the methodology that we employ here. In September 2005, one needed a .edu e-mail address to become
+a member of Facebook. We thus ignore links between nodes at different institutions and study the Facebook networks
+of the 100 institutions as 100 separate networks. For each network, we have categorical data encompassing the gender,
+major, class year, high school, and residence (e.g., dormitory, House, fraternity, etc.) of the users. We examine homophily
+and community structure (network partitions that are obtained algorithmically) for each of the networks and compare the
+community structure to partitions based on the given categorical data. We thereby compare and contrast the organizations of
+the 100 different Facebook networks, which arguably allows us to compare and contrast the organizations of the underlying
+university social networks to which they provide an imperfect counterpart. In addition to the inherent interest of these
+Facebook networks, our investigation is important for subsequent use of these networks – which were formed via ostensibly
+the same generative mechanism – as benchmark examples for numerous types of computations, such as new community
+detection methods.
+The remainder of this paper is organized as follows. We first discuss the Facebook data and present the methods that
+we used for testing homophily at the dyad level and demographic organization at the community level. We then present
+and discuss results on the largest connected components of the networks, student-only subnetworks, and single-gender
+subnetworks. Finally, we summarize and discuss our findings.
